@@ -36,6 +36,22 @@ export default function ProductCard({ product }) {
   return (
     <div style={{ border: '1px solid #e2e2e5', borderRadius: 12, padding: 20, background: '#fff' }}>
       <h3 style={{ margin: '0 0 8px' }}>{product.name}</h3>
+      {product.type === 'course' && (
+        <span
+          style={{
+            display: 'inline-block',
+            fontSize: 11,
+            fontWeight: 600,
+            color: '#0b5fff',
+            background: '#eaf1ff',
+            padding: '2px 8px',
+            borderRadius: 999,
+            marginBottom: 8
+          }}
+        >
+          COURSE · {product.lessons.length} LESSONS
+        </span>
+      )}
       <p style={{ color: '#555', fontSize: 14 }}>{product.description}</p>
       <p style={{ fontWeight: 600, fontSize: 18 }}>₦{product.priceNaira.toLocaleString()}</p>
       <input

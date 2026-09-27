@@ -7,7 +7,7 @@ function SuccessInner() {
   const searchParams = useSearchParams();
   const reference = searchParams.get('reference') || searchParams.get('trxref');
   const [status, setStatus] = useState('checking');
-  const [downloadUrl, setDownloadUrl] = useState(null);
+  const [access, setAccess] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function SuccessInner() {
           setError(data.error);
         } else {
           setStatus('done');
-          setDownloadUrl(data.downloadUrl);
+          setAccess(data.access || []);
         }
       })
       .catch(() => {
@@ -39,21 +39,27 @@ function SuccessInner() {
       {status === 'done' && (
         <>
           <h2>Payment confirmed 🎉</h2>
-          <a
-            href={downloadUrl}
-            style={{
-              display: 'inline-block',
-              marginTop: 16,
-              padding: '10px 20px',
-              background: '#0b5fff',
-              color: '#fff',
-              borderRadius: 6,
-              textDecoration: 'none'
-            }}
-          >
-            Download your product
-          </a>
-          <p style={{ fontSize: 12, color: '#888', marginTop: 8 }}>This link expires in 24 hours.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 16 }}>
+            {access.map((a, i) => (
+              <a
+                key={i}
+                href={a.url}
+                style={{
+                  display: 'inline-block',
+                  padding: '10px 20px',
+                  background: '#0b5fff',
+                  color: '#fff',
+                  borderRadius: 6,
+                  textDecoration: 'none'
+                }}
+              >
+                {a.label}
+              </a>
+            ))}
+          </div>
+          <p style={{ fontSize: 12, color: '#888', marginTop: 12 }}>
+            Bookmark this page — bonus file links expire in 24 hours, but course access does not.
+          </p>
         </>
       )}
       {status === 'error' && (

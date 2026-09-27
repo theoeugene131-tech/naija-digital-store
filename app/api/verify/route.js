@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
+import { products } from '../../../data/products';
+import { createAccessToken } from '../../../lib/access-token';
 
 export const runtime = 'nodejs';
+
+const ONE_DAY = 24 * 60 * 60 * 1000;
+const TEN_YEARS = 10 * 365 * ONE_DAY; // effectively permanent course access
 
 export async function GET(request) {
   const reference = request.nextUrl.searchParams.get('reference');
@@ -24,9 +28,27 @@ export async function GET(request) {
   }
 
   const productId = data.data.metadata?.productId;
-  const exp = Date.now() + 24 * 60 * 60 * 1000; // link valid for 24 hours
-  const sig = crypto.createHmac('sha256', secretKey).update(`${productId}.${exp}`).digest('hex');
-  const token = `${productId}.${exp}.${sig}`;
+  const product = products.find((p) => p.id === productId);
+  if (!product) {
+    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+  }
 
-  return NextResponse.json({ downloadUrl: `/api/download/${token}` });
+  // A product can grant course access, a file download, or both (a course
+  // with a bonus resource pack) — collect whichever apply.
+  const access = [];
+
+  if (product.type === 'course') {
+    const courseToken = createAccessToken(productId, Date.now() + TEN_YEARS, secretKey);
+    access.push({ label: 'Access your course', url: `/course/${courseToken}` });
+  }
+
+  if (product.file) {
+    const fileToken = createAccessToken(productId, Date.now() + ONE_DAY, secretKey);
+    access.push({
+      label: product.type === 'course' ? 'Download bonus resources' : 'Download your product',
+      url: `/api/download/${fileToken}`
+    });
+  }
+
+  return NextResponse.json({ access });
 }
