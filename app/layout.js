@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Naija Digital Store',
-  description: 'Buy digital products instantly, pay with Paystack, download right away.'
+  title: 'Naija Digital Store — Medash Consult',
+  description: 'Buy digital products instantly, pay via bank transfer, download right away. Developed by Medash Consult.'
 };
 
 export default function RootLayout({ children }) {

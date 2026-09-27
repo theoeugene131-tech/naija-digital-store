@@ -42,6 +42,9 @@ export default function HomePage() {
           Chat on WhatsApp
         </a>
       </div>
+      <footer style={{ marginTop: 40, padding: 20, textAlign: 'center', color: '#888', fontSize: 13 }}>
+        Developed by <strong>Medash Consult</strong>
+      </footer>
     </main>
   );
 }

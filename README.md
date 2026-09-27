@@ -1,5 +1,7 @@
 # Naija Digital Store
 
+**Developed by Medash Consult**
+
 A Next.js store for selling digital products — templates, spreadsheets, and video courses — with manual bank transfer verification:
 
 1. Customer picks a product, enters their email, clicks **Buy now**.
