@@ -7,6 +7,8 @@ A Next.js store for selling digital products — templates, spreadsheets, and vi
 3. They submit their transaction reference for verification.
 4. You verify the payment in the **Admin panel** and send the download link.
 
+For any enquiries, customers can reach you on **WhatsApp: +234 802 689 2077**.
+
 It ships with seven sample products so the full flow works out of the box:
 
 - **AI Video Creation for Beginners** (course — 6 lessons + a bonus toolkit download)

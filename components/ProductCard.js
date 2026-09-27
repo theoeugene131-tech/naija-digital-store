@@ -154,6 +154,17 @@ export default function ProductCard({ product }) {
         Buy now
       </button>
       {error && <p style={{ color: 'crimson', fontSize: 13 }}>{error}</p>}
+      <p style={{ marginTop: 12, fontSize: 13, color: '#555', textAlign: 'center' }}>
+        Have questions?{' '}
+        <a
+          href="https://wa.me/2348026892077"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: '#0b5fff', textDecoration: 'none' }}
+        >
+          Chat on WhatsApp
+        </a>
+      </p>
     </div>
   );
 }
